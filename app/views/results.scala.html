@@ -80,8 +80,8 @@
     <script>
       localStorage.setItem("mandelbrot", "Hello world");
       let svg = document.getElementById("svg");
-      let rows = Array.from(svg.getElementsByClassName("row"));
-      let ys = rows.map(row => Number(row.getAttribute("id")));
+      let rowEls = Array.from(svg.getElementsByClassName("row"));
+      // let ys = rowEls.map(row => Number(row.getAttribute("id")));
       const pathEls = Array.from(document.getElementsByTagName("path"));
       const tooltip = document.getElementById("tooltip");
       pathEls.forEach(pathEl => {
