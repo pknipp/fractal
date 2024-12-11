@@ -78,9 +78,9 @@
       </g>
     </svg>
     <script>
-      const rows = JSON.stringify(@grid.rows.map(row => row.length));
+      const rows = @grid.rows;
       console.log("rows = ", rows);
-      localStorage.setItem("mandelbrot", rows);
+      localStorage.setItem("mandelbrot", rows.length);
       let svg = document.getElementById("svg");
       let rowEls = Array.from(svg.getElementsByClassName("row"));
       // let ys = rowEls.map(row => Number(row.getAttribute("id")));
