@@ -78,6 +78,7 @@
       </g>
     </svg>
     <script>
+      localStorage.setItem("mandelbrot", "Hello world");
       let svg = document.getElementById("svg");
       let rows = Array.from(svg.getElementsByClassName("row"));
       let ys = rows.map(row => Number(row.getAttribute("id")));
