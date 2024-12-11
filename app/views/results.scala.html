@@ -78,7 +78,13 @@
       </g>
     </svg>
     <script>
-      localStorage.setItem("mandelbrot", "Hello world");
+      const rows = JSON.stringify(@grid.rows.map(row => row.map(z => ({
+        "x": z.x,
+        "y": z.y,
+        "iterNo": z.iterNo,
+        "hasEscaped": z.hasEscaped,
+      }))));
+      localStorage.setItem("mandelbrot", rows);
       let svg = document.getElementById("svg");
       let rowEls = Array.from(svg.getElementsByClassName("row"));
       // let ys = rowEls.map(row => Number(row.getAttribute("id")));
