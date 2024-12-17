@@ -85,7 +85,6 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     val hexels: mutable.Map[(Int, Int), Complex] = mutable.HashMap.empty
 
     // ArrayBuffer[Array[Complex]] = ArrayBuffer()
-    var numCells = 0
     while (iy <= ny) {
       // val row: ArrayBuffer[Complex] = ArrayBuffer()
       val isEven = iy % 2 == 0
@@ -95,14 +94,13 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
       if ((nx % 2 == 0) != isEven) nx -= 1
       var ix = -nx
       while (ix <= nx) {
-        numCells += 1
         val x = ix * dx + c.x
         var z = new Complex(x, y)
         val result = z.calcIterNo(maxIter)
         z.iterNo = result._1
         z.hasEscaped = result._2
         // row += toDom(z)
-        hexels += ((nx, ny) -> toDom(z))
+        hexels += ((ix, iy) -> toDom(z))
         ix += 2
       }
       iy += 1
