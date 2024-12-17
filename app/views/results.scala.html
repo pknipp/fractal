@@ -66,11 +66,11 @@
           >
             <path
               d="M0,1.1547L1,0.57735v-1.1547L0,-1.1547L-1,-0.57735,v1.1547,L0,1.1547"
-              fill=@(point.color(grid.maxIterNo, point.hasEscaped))
+              fill=@(z.color(grid.maxIterNo, z.hasEscaped))
               stroke-width="0"
-              x=@(grid.fromDom(point).x)
-              y=@(grid.fromDom(point).y)
-              iter=@(point.iterNo)
+              x=@(grid.fromDom(z).x)
+              y=@(grid.fromDom(z).y)
+              iter=@(z.iterNo)
             />
           </g>
         }
