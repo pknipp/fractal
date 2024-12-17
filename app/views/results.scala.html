@@ -16,8 +16,8 @@
         <tbody>
           <tr>
             <td># of hexagonal cells</td>
-            <td>@(if (grid.mag2 > 999999) f"${grid.numberOfCells.toDouble}%.2e"
-              else Math.round(grid.numberOfCells))</td>
+            <td>@(if (grid.mag2 > 999999) f"${grid.hexels.size.toDouble}%.2e"
+              else Math.round(grid.hexels.size))</td>
             <td>
               <button id="increase-cells">Quadruple</button>
               this number.
@@ -58,36 +58,28 @@
       x=@grid.c.x
       y=@grid.c.y
     >
-      <g id="rows">
-        @for(row <- grid.rows) {
+      <g id="hexels">
+        @for(z <- grid.hexels) {
           <g
-            transform="translate(0, @row(0).y)"
-            id=@row(0).y
-            class="row"
+            transform="translate(@z.x, @z.y) scale(@(grid.size / grid.nxOverTwo / 2))"
+            class="hexel"
           >
-            @for(point <- row) {
-              <g
-                transform="translate(@point.x, 0) scale(@(grid.size / grid.nxOverTwo / 2))"
-                class=@(point.x)
-              >
-                <path
-                  d="M0,1.1547L1,0.57735v-1.1547L0,-1.1547L-1,-0.57735,v1.1547,L0,1.1547"
-                  fill=@(point.color(grid.maxIterNo, point.hasEscaped))
-                  stroke-width="0"
-                  x=@(grid.fromDom(point).x)
-                  y=@(grid.fromDom(point).y)
-                  iter=@(point.iterNo)
-                />
-              </g>
-            }
+            <path
+              d="M0,1.1547L1,0.57735v-1.1547L0,-1.1547L-1,-0.57735,v1.1547,L0,1.1547"
+              fill=@(point.color(grid.maxIterNo, point.hasEscaped))
+              stroke-width="0"
+              x=@(grid.fromDom(point).x)
+              y=@(grid.fromDom(point).y)
+              iter=@(point.iterNo)
+            />
           </g>
         }
       </g>
     </svg>
     <script>
       let svg = document.getElementById("svg");
-      let rows = Array.from(svg.getElementsByClassName("row"));
-      let ys = rows.map(row => Number(row.getAttribute("id")));
+      // let rows = Array.from(svg.getElementsByClassName("row"));
+      // let ys = rows.map(row => Number(row.getAttribute("id")));
       const pathEls = Array.from(document.getElementsByTagName("path"));
       const tooltip = document.getElementById("tooltip");
       pathEls.forEach(pathEl => {

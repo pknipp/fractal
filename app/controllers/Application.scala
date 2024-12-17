@@ -7,6 +7,7 @@ import play.api.mvc._
 import play.api.libs.json._
 import scala.math._
 import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Map
 
 class Complex(val x: Double, val y: Double) {
   val magSq = x * x + y * y
@@ -73,7 +74,7 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     val number = c.y + 2.0 / mag2
     f"$number%.5f"
   }
-  val rows = {
+  val hexels = {
     var dxTimesTwo = 2.0 / nxOverTwo
     var dy = dxTimesTwo * sqrt(3) / 2
     val ny = floor(2.0 / dy).toInt
@@ -81,10 +82,12 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     dxTimesTwo /= pow(2, mag).toDouble
     val dx = dxTimesTwo / 2
     dy /= pow(2, mag).toDouble
-    val rows: ArrayBuffer[Array[Complex]] = ArrayBuffer()
+    val hexels = mutable.Map.empty[(Int, Int), Complex]()
+
+    ArrayBuffer[Array[Complex]] = ArrayBuffer()
     var numCells = 0
     while (iy <= ny) {
-      val row: ArrayBuffer[Complex] = ArrayBuffer()
+      // val row: ArrayBuffer[Complex] = ArrayBuffer()
       val isEven = iy % 2 == 0
       var y = iy * dy
       var nx = floor(2.0 / pow(2, mag) / dx).toInt
@@ -98,25 +101,26 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
         val result = z.calcIterNo(maxIter)
         z.iterNo = result._1
         z.hasEscaped = result._2
-        row += toDom(z)
+        // row += toDom(z)
+        hexels += ((nx, ny) -> toDom(z))
         ix += 2
       }
-      rows += row.toArray
       iy += 1
     }
-    rows.toArray
+    hexels
   }
-  val numberOfCells = {
-    rows.map(_.length).sum
-  }
+  // val numberOfCells = {
+    // rows.map(_.length).sum
+  // }
   val maxIterNo = {
-    var maxIterNo = 0
-    for (row <- rows) {
-      for (point <- row) {
-        if (maxIterNo < point.iterNo) maxIterNo = point.iterNo
-      }
-    }
-    maxIterNo
+    hexels.maxBy(_.iterNo).iterNo
+    // var maxIterNo = 0
+    // for (row <- rows) {
+      // for (point <- row) {
+        // if (maxIterNo < point.iterNo) maxIterNo = point.iterNo
+      // }
+    // }
+    // maxIterNo
   }
   def toDom(z: Complex): Complex = {
     z.add(new Complex(-c.x, -c.y)).mul(new Complex(pow(2, mag).toDouble, 0.0)).add(new Complex(2.0, 2.0)).mul(new Complex(size / 2, 0))
@@ -213,7 +217,7 @@ class Application @Inject()(val controllerComponents: ControllerComponents, val 
         new Complex(url.x, url.y),
       ))
 
-      Ok(Json.obj("rows" -> grid.rows.map(_.map(z => {
+      Ok(Json.obj("rows" -> grid.hexels.mapValues(z => {
         val zNonDom = grid.fromDom(z)
         Json.obj(
           "x" -> zNonDom.x,
@@ -223,7 +227,7 @@ class Application @Inject()(val controllerComponents: ControllerComponents, val 
           "color" -> z.color(url.maxIter, z.hasEscaped),
           "hasEscaped" -> z.hasEscaped,
         )
-      }))))
+      })))
     }
   }
 
