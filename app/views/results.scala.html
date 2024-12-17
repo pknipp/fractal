@@ -59,7 +59,7 @@
       y=@grid.c.y
     >
       <g id="hexels">
-        @for(z <- grid.hexels) {
+        @for((_, z) <- grid.hexels) {
           <g
             transform="translate(@z.x, @z.y) scale(@(grid.size / grid.nxOverTwo / 2))"
             class="hexel"
