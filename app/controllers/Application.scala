@@ -84,7 +84,7 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     dy /= pow(2, mag).toDouble
     val hexels = mutable.Map.empty[(Int, Int), Complex]()
 
-    ArrayBuffer[Array[Complex]] = ArrayBuffer()
+    // ArrayBuffer[Array[Complex]] = ArrayBuffer()
     var numCells = 0
     while (iy <= ny) {
       // val row: ArrayBuffer[Complex] = ArrayBuffer()
