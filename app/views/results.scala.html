@@ -59,10 +59,11 @@
       y=@grid.c.y
     >
       <g id="hexels">
-        @for((_, z) <- grid.hexels) {
+        @for((coords, z) <- grid.hexels) {
           <g
             transform="translate(@z.x, @z.y) scale(@(grid.size / grid.nxOverTwo / 2))"
             class="hexel"
+            id=@coords
           >
             <path
               d="M0,1.1547L1,0.57735v-1.1547L0,-1.1547L-1,-0.57735,v1.1547,L0,1.1547"
