@@ -7,7 +7,7 @@ import play.api.mvc._
 import play.api.libs.json._
 import scala.math._
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.Map
+import scala.collection.mutable
 
 class Complex(val x: Double, val y: Double) {
   val magSq = x * x + y * y
@@ -82,7 +82,7 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     dxTimesTwo /= pow(2, mag).toDouble
     val dx = dxTimesTwo / 2
     dy /= pow(2, mag).toDouble
-    val hexels = mutable.Map.empty[(Int, Int), Complex]()
+    val hexels: mutable.Map[(Int, Int), Complex] = mutable.HashMap.empty[(Int, Int), Complex]()
 
     // ArrayBuffer[Array[Complex]] = ArrayBuffer()
     var numCells = 0
