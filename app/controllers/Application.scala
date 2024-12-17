@@ -82,7 +82,7 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     dxTimesTwo /= pow(2, mag).toDouble
     val dx = dxTimesTwo / 2
     dy /= pow(2, mag).toDouble
-    val hexels: mutable.Map[(Int, Int), Complex] = mutable.HashMap.empty[(Int, Int), Complex]()
+    val hexels: mutable.Map[(Int, Int), Complex] = mutable.HashMap.empty
 
     // ArrayBuffer[Array[Complex]] = ArrayBuffer()
     var numCells = 0
