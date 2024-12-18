@@ -107,6 +107,15 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     }
     hexels
   }
+  def setIterNo(maxIter: Int): Unit = {
+    for {
+      (_, z) <- hexels
+    } {
+      val result = fromDom(z).calcIterNo(maxIter)
+      z.iterNo = result._1
+      z.hasEscaped = result._2
+    }
+  }
   // val numberOfCells = {
     // rows.map(_.length).sum
   // }
