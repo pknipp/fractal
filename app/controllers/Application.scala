@@ -201,13 +201,15 @@ class Application @Inject()(val controllerComponents: ControllerComponents, val 
     if (!messages.isEmpty) {
       BadRequest(views.html.error(messages))
     } else {
-      Ok(views.html.results(new Grid(
+      val grid = new Grid(
         340.0,
         url.nxOverTwo,
         url.maxIter,
         url.mag,
         new Complex(url.x, url.y),
-      )))
+      )
+      grid.setIterNo(url.maxIter)
+      Ok(views.html.results(grid))
     }
   }
 
