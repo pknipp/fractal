@@ -46,7 +46,7 @@ class Complex(val x: Double, val y: Double) {
     if (!hasEscaped) {
       "#000000"
     } else {
-      val n = floor(255 * iterNo / maxIterNo).toInt
+      val n = floor(255 * iterNo / if (maxIterNo == 0) {1} else {maxIterNo}.toInt
       var hexR = (if (n < 16) "0" else "") + Integer.toString(n, 16)
       var hexB = (if (255 - n < 16) "0" else "") + Integer.toString(255 - n, 16)
       s"#${hexR}00${hexB}"
