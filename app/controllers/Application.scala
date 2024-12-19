@@ -96,9 +96,9 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
       while (ix <= nx) {
         val x = ix * dx + c.x
         var z = new Complex(x, y)
-        val result = z.calcIterNo(maxIter)
-        z.iterNo = result._1
-        z.hasEscaped = result._2
+        // val result = z.calcIterNo(maxIter)
+        // z.iterNo = result._1
+        // z.hasEscaped = result._2
         // row += toDom(z)
         hexels += ((ix, iy) -> toDom(z))
         ix += 2
