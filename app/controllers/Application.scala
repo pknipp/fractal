@@ -119,7 +119,7 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
   // val numberOfCells = {
     // rows.map(_.length).sum
   // }
-  val maxIterNo = {
+  def maxIterNo(): Int = {
     // hexels.maxBy(_.iterNo).iterNo
     (hexels.maxBy { case (_, z) => z.iterNo })._2.iterNo
     // var maxIterNo = 0
