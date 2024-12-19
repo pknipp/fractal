@@ -74,6 +74,7 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
     val number = c.y + 2.0 / mag2
     f"$number%.5f"
   }
+  val potentialEscapees: mutable.map[(Int, Int), Complex] = mutable.HashMap.empty
   val hexels = {
     var dxTimesTwo = 2.0 / nxOverTwo
     var dy = dxTimesTwo * sqrt(3) / 2
@@ -101,6 +102,9 @@ class Grid(val size: Double, val nxOverTwo: Int, val maxIter: Int, val mag: Int,
         // z.hasEscaped = result._2
         // row += toDom(z)
         hexels += ((ix, iy) -> toDom(z))
+        if (Math.abs(ix) == nx || Math.abs(iy) == ny) {
+          potentialEscapees += ((ix, iy) -> z)
+        }
         ix += 2
       }
       iy += 1
